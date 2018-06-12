@@ -1,12 +1,16 @@
 <?php
+/**
+ * Classe permettant une connexion PDO
+ */
 
 class ConnectPDO
 {
-
+    // attributs
     private $connect;
 
-
-
+    /**
+     * ConnectPDO constructor.
+     */
     public function __construct($type,$host,$name,$port,$login,$pwd,$charset="utf8",$mode='dev',$persist=false)
     {
         try {
@@ -23,19 +27,20 @@ class ConnectPDO
                 $this->connect->setAttribute(PDO::ATTR_PERSISTENT);
 
             }
-            return $this->connect;
+
+            return $this->getConnect();
 
         } catch (PDOException $e) {
 
             echo "Erreur: " . $e->getMessage();
             echo "<br>";
-
-            echo "n° " . $e->getCode();
-            die();
-
+            echo "N° " . $e->getCode();// code erreur
+            die();// arrêt du script
         }
-
-
-
     }
+
+    public function getConnect(){
+        return $this->connect;
+    }
+
 }
