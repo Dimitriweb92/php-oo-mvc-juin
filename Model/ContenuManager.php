@@ -100,16 +100,31 @@ class ContenuManager
         $create->bindValue(":title",$datas->getTitre(),PDO::PARAM_STR);
         $create->bindValue(":txt",$datas->getTexte(),PDO::PARAM_STR);
         $create->bindValue(":temps",$datas->getLadate(),PDO::PARAM_STR);
-
-        $create->execute();
+        try {
+            $create->execute();
+        }catch(PDOException $e){
+            die($e->getMessage());
+        }
 
         if($create->rowCount()){
             return true;
         }else{
-            die($create->errorCode());
             return false;
         }
 
+    }
+
+    /*
+    *
+    * methodes CRUD - Delete
+    *
+    */
+    public function deleteContenu(int $id){
+        $delete = $this->connexion->prepare("DELETE FROM contenu WHERE idcontenu=?");
+        $delete->bindValue(1,$id,PDO::PARAM_INT);
+        $delete->execute();
+        // la suppression a fonctionnée
+        return ($delete->rowCount())? true: false;
     }
 
 }

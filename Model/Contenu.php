@@ -81,7 +81,13 @@ class Contenu
     public function setLadate($ladate)
     {
         if(!empty($ladate)) {
-            $this->ladate = $ladate;
+            // regex ok
+            preg_match("/^(\d{4})-([0]\d|[1][0-2])\-([0-2]\d|[3][0-1]) ([0-1]\d|[2][0-3]):([0-5][0-9]):([0-5][0-9])/",$ladate,$sort);
+            if(!empty($sort)){
+                $this->ladate = $ladate;
+            }else{
+                $this->ladate = date("Y-m-d H:i:s");
+            }
         }else{
             $this->ladate = date("Y-m-d H:i:s");
         }
